@@ -12,8 +12,15 @@ Open your terminal or command prompt and run the following command to install th
 pip install opencv-python Pillow
 ```
 
-### Step 2: Download Files
-download the `make_frame_animation.py` and `ffmpeg.exe` to the same directory.
+### Step 2: Download the script
+download the `make_frame_animation.py` to a directory of your choosings.
+
+### Step 2.1: Download and Setup FFmpeg
+1. Go to [FFmpeg official downloads](https://ffmpeg.org/download.html).
+2. Under "Get packages & executable files", download the zip file for your operating system.
+3. Extract the contents of the downloaded zip/7z file.
+4. Inside the extracted folder, navigate to the bin folder.
+5. Locate the `ffmpeg.exe` file and move it to the same directory as the script.
 
 ### Step 3: Run the Script
 open your terminal inside the directory you download the files to/moved them to.
@@ -55,11 +62,13 @@ The output video file is saved in the same directory with a name based on the fi
 - Frame Delay: A lower delay results in faster animation and vice versa.
 - Quality Settings: Higher quality settings result in larger file sizes. (low is mostly enough for image squenz animations)
 - Directory: The script processes images and saves the video in the directory where it is located.
+- Image size: The script is made to process images for a sequnce, please do not add imgs to it that differe in size,
+  the script will try to resize images that don't match the size of the first image, but it might cause errors or problems.
 
 
 # Info
 
-This project includes `ffmpeg.exe` for creating videos from frame sequences using a Python script. FFmpeg is licensed under the LGPL/GPL. 
+This project needs `ffmpeg.exe` for creating videos from frame sequences using a Python script. FFmpeg is licensed under the LGPL/GPL. 
 
 The `ffmpeg.exe` binary was obtained from [FFmpeg official downloads](https://ffmpeg.org/download.html).
 
