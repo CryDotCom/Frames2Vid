@@ -59,12 +59,12 @@ The output video file is saved in the same directory with a name based on the fi
 
 # Info
 
-This repository contains a Python script that uses `ffmpeg.exe` to create videos from frame sequences.
-
-This project includes `ffmpeg.exe` for creating videos from frame sequences. FFmpeg is licensed under the LGPL/GPL. 
+This project includes `ffmpeg.exe` for creating videos from frame sequences using a Python script. FFmpeg is licensed under the LGPL/GPL. 
 
 The `ffmpeg.exe` binary was obtained from [FFmpeg official downloads](https://ffmpeg.org/download.html).
 
 For more details on FFmpeg's license, please refer to the [LICENSE-FFmpeg](LICENSE-FFmpeg) file or visit the [FFmpeg legal page](https://ffmpeg.org/legal.html).
 
 You can download the source code for FFmpeg from their [official source](https://ffmpeg.org/download.html).
+
+This script was made with the Help of AI.
