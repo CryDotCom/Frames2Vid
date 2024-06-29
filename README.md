@@ -50,6 +50,7 @@ Ensure that the images are named in a way that reflects their order, as they wil
   - high (3000k)
   - very_high (4000k)
   - ultra_high (5000k)
+  - custom
 >If no valid quality option is selected, the default quality (low) will be used.
 
 ### Video Creation
