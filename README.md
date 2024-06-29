@@ -42,11 +42,11 @@ Ensure that the images are named in a way that reflects their order, as they wil
 - Frame Delay: Enter the delay between frames in milliseconds. This value controls the speed of the animation.
 - Hold Frames: You can choose to hold the first and last frames for a longer duration. If you select this option, you will be prompted to enter the durations (in milliseconds) for holding the first and last frames.
 - Quality Option: You will be prompted to select the quality of the output video. The options are:
--- low (1000k)
--- medium (2000k)
--- high (3000k)
--- very_high (4000k)
--- ultra_high (5000k)
+  - low (1000k)
+  - medium (2000k)
+  - high (3000k)
+  - very_high (4000k)
+  - ultra_high (5000k)
 >If no valid quality option is selected, the default quality (low) will be used.
 
 ### Video Creation
