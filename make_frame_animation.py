@@ -3,12 +3,15 @@ import os
 import subprocess
 from PIL import Image
 
-def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms, quality_option, custom_bitrate=None):
+def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms, quality_option, custom_bitrate=None, sort_by='name'):
     # Get the current folder path
     folder_path = os.path.dirname(os.path.abspath(__file__))
 
     # Get list of all files in the folder
-    files = sorted([f for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg'))])
+    if sort_by == 'date':
+        files = sorted([f for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg'))], key=lambda x: os.path.getmtime(os.path.join(folder_path, x)))
+    else:
+        files = sorted([f for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg'))])
 
     if not files:
         print("No images found in the folder.")
@@ -122,6 +125,24 @@ while True:
     except ValueError as e:
         print(f"Invalid input: {e}")
 
+# Prompt user for sorting option
+while True:
+    try:
+        print("Sort images by:")
+        print("1. Name")
+        print("2. Date")
+        sort_choice = int(input("Enter your choice (1-2): "))
+        if sort_choice == 1:
+            sort_by = 'name'
+            break
+        elif sort_choice == 2:
+            sort_by = 'date'
+            break
+        else:
+            raise ValueError("Invalid choice.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+
 # Prompt user for holding start and end frames
 hold_start_end = input("Do you want to hold the first and last frames for a different duration? (y/n): ").strip().lower()
 
@@ -172,7 +193,7 @@ if hold_start_end == 'y':
         except ValueError as e:
             print(f"Invalid input: {e}")
         else:
-            images_to_video(delay_ms, True, True, hold_first_ms, hold_last_ms, quality_option, custom_bitrate)
+            images_to_video(delay_ms, True, True, hold_first_ms, hold_last_ms, quality_option, custom_bitrate, sort_by)
 else:
     # Prompt user for quality option
     try:
@@ -212,4 +233,4 @@ else:
     except ValueError as e:
         print(f"Invalid input: {e}")
     else:
-        images_to_video(delay_ms, False, False, delay_ms, delay_ms, quality_option, custom_bitrate)
+        images_to_video(delay_ms, False, False, delay_ms, delay_ms, quality_option, custom_bitrate, sort_by)
