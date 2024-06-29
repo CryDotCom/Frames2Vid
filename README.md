@@ -39,9 +39,9 @@ The script looks for all image files (PNG, JPG, JPEG) in the directory where it 
 Ensure that the images are named in a way that reflects their order, as they will be sorted alphabetically.
 
 ### User Input
-Frame Delay: Enter the delay between frames in milliseconds. This value controls the speed of the animation.
-Hold Frames: You can choose to hold the first and last frames for a longer duration. If you select this option, you will be prompted to enter the durations (in milliseconds) for holding the first and last frames.
-Quality Option: You will be prompted to select the quality of the output video. The options are:
+- Frame Delay: Enter the delay between frames in milliseconds. This value controls the speed of the animation.
+- Hold Frames: You can choose to hold the first and last frames for a longer duration. If you select this option, you will be prompted to enter the durations (in milliseconds) for holding the first and last frames.
+- Quality Option: You will be prompted to select the quality of the output video. The options are:
 - low (1000k)
 - medium (2000k)
 - high (3000k)
