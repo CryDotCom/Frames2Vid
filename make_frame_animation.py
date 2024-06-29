@@ -40,6 +40,7 @@ def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms
 
     # Append the first frame multiple times if needed
     first_frame = cv2.imread(first_image_path)
+    first_frame = cv2.resize(first_frame, (width, height))  # Rescale to match the size of the first image
     for _ in range(hold_first_frames):
         frames.append(first_frame)
 
@@ -47,11 +48,13 @@ def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms
     for file in files:
         img_path = os.path.join(folder_path, file)
         img = cv2.imread(img_path)
+        img = cv2.resize(img, (width, height))  # Rescale to match the size of the first image
         frames.append(img)
 
     # Append the last frame multiple times if needed
     last_image_path = os.path.join(folder_path, files[-1])
     last_frame = cv2.imread(last_image_path)
+    last_frame = cv2.resize(last_frame, (width, height))  # Rescale to match the size of the first image
     for _ in range(hold_last_frames):
         frames.append(last_frame)
 
