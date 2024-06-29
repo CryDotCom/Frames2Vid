@@ -43,6 +43,7 @@ Ensure that the images are named in a way that reflects their order, as they wil
 
 ### User Input
 - Frame Delay: Enter the delay between frames in milliseconds. This value controls the speed of the animation.
+- Sorting type: Sort by name or date
 - Hold Frames: You can choose to hold the first and last frames for a longer duration. If you select this option, you will be prompted to enter the durations (in milliseconds) for holding the first and last frames.
 - Quality Option: You will be prompted to select the quality of the output video. The options are:
   - low (1000k)
@@ -61,7 +62,7 @@ FFmpeg is then used to encode these frames into an MP4 video file with the speci
 The output video file is saved in the same directory with a name based on the first image’s name, appended with _output.
 
 ### Things to Keep in Mind
-- Image Order: Ensure your images are named sequentially or in an order that will be correctly sorted alphabetically.
+- Image Order: Ensure your images are named sequentially or in an order that will be correctly sorted alphabetically or chose to sort by date.
 - FFmpeg Setup: Make sure ffmpeg.exe is in the same directory as your script.
 - Frame Delay: A lower delay results in faster animation and vice versa.
 - Quality Settings: Higher quality settings result in larger file sizes. (low is mostly enough for image squenz animations)
