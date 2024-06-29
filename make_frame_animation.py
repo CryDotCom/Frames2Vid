@@ -3,7 +3,7 @@ import os
 import subprocess
 from PIL import Image
 
-def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms, quality_option):
+def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms, quality_option, custom_bitrate=None):
     # Get the current folder path
     folder_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -75,7 +75,8 @@ def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms
         'medium': '2000k',
         'high': '3000k',
         'very_high': '4000k',
-        'ultra_high': '5000k'
+        'ultra_high': '5000k',
+        'custom': custom_bitrate
     }
 
     # Set default quality option if not provided or invalid
@@ -95,7 +96,7 @@ def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms
         '-vcodec', 'rawvideo',
         '-s', f'{width}x{height}',
         '-pix_fmt', 'bgr24',
-        '-r', f'{1000 // delay_ms}',
+        '-r', f'{1000 / delay_ms}',
         '-i', '-',
         '-c:v', fourcc,
         '-b:v', bitrate,  # Set bitrate here
@@ -112,50 +113,26 @@ def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms
     print(f"Video saved as {output_file}")
 
 # Prompt user for delay in milliseconds
-try:
-    delay_ms = int(input("Enter the delay between frames in milliseconds: "))
-    if delay_ms <= 0:
-        raise ValueError("The delay must be a positive integer.")
-except ValueError as e:
-    print(f"Invalid input: {e}")
-else:
-    # Prompt user for holding start and end frames
-    hold_start_end = input("Do you want to hold the first and last frames for a different duration? (y/n): ").strip().lower()
-    
-    if hold_start_end == 'y':
-        try:
-            hold_first_ms = int(input("Enter the duration to hold the first frame in milliseconds: "))
-            hold_last_ms = int(input("Enter the duration to hold the last frame in milliseconds: "))
-            if hold_first_ms <= 0 or hold_last_ms <= 0:
-                raise ValueError("The delay must be a positive integer.")
-        except ValueError as e:
-            print(f"Invalid input: {e}")
-        else:
-            # Prompt user for quality option
-            try:
-                print("Select the quality option:")
-                print("1. Low (1000k)")
-                print("2. Medium (2000k)")
-                print("3. High (3000k)")
-                print("4. Very High (4000k)")
-                print("5. Ultra High (5000k)")
-                choice = int(input("Enter your choice (1-5): "))
-                if choice == 1:
-                    quality_option = 'low'
-                elif choice == 2:
-                    quality_option = 'medium'
-                elif choice == 3:
-                    quality_option = 'high'
-                elif choice == 4:
-                    quality_option = 'very_high'
-                elif choice == 5:
-                    quality_option = 'ultra_high'
-                else:
-                    raise ValueError("Invalid choice.")
-            except ValueError as e:
-                print(f"Invalid input: {e}")
-            else:
-                images_to_video(delay_ms, True, True, hold_first_ms, hold_last_ms, quality_option)
+while True:
+    try:
+        delay_ms = int(input("Enter the delay between frames in milliseconds (must be at least 10ms): "))
+        if delay_ms < 10:
+            raise ValueError("The delay must be at least 10 milliseconds.")
+        break
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+
+# Prompt user for holding start and end frames
+hold_start_end = input("Do you want to hold the first and last frames for a different duration? (y/n): ").strip().lower()
+
+if hold_start_end == 'y':
+    try:
+        hold_first_ms = int(input("Enter the duration to hold the first frame in milliseconds: "))
+        hold_last_ms = int(input("Enter the duration to hold the last frame in milliseconds: "))
+        if hold_first_ms <= 0 or hold_last_ms <= 0:
+            raise ValueError("The duration must be a positive integer.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
     else:
         # Prompt user for quality option
         try:
@@ -165,7 +142,9 @@ else:
             print("3. High (3000k)")
             print("4. Very High (4000k)")
             print("5. Ultra High (5000k)")
-            choice = int(input("Enter your choice (1-5): "))
+            print("6. Custom")
+            choice = int(input("Enter your choice (1-6): "))
+            custom_bitrate = None
             if choice == 1:
                 quality_option = 'low'
             elif choice == 2:
@@ -176,9 +155,61 @@ else:
                 quality_option = 'very_high'
             elif choice == 5:
                 quality_option = 'ultra_high'
+            elif choice == 6:
+                quality_option = 'custom'
+                while True:
+                    try:
+                        custom_bitrate = input("Enter custom bitrate (e.g., 6000k or 6000): ").strip()
+                        if custom_bitrate.endswith('k'):
+                            custom_bitrate = custom_bitrate
+                        else:
+                            custom_bitrate = custom_bitrate + 'k'
+                        break
+                    except ValueError as e:
+                        print(f"Invalid input: {e}")
             else:
                 raise ValueError("Invalid choice.")
         except ValueError as e:
             print(f"Invalid input: {e}")
         else:
-            images_to_video(delay_ms, False, False, delay_ms, delay_ms, quality_option)
+            images_to_video(delay_ms, True, True, hold_first_ms, hold_last_ms, quality_option, custom_bitrate)
+else:
+    # Prompt user for quality option
+    try:
+        print("Select the quality option:")
+        print("1. Low (1000k)")
+        print("2. Medium (2000k)")
+        print("3. High (3000k)")
+        print("4. Very High (4000k)")
+        print("5. Ultra High (5000k)")
+        print("6. Custom")
+        choice = int(input("Enter your choice (1-6): "))
+        custom_bitrate = None
+        if choice == 1:
+            quality_option = 'low'
+        elif choice == 2:
+            quality_option = 'medium'
+        elif choice == 3:
+            quality_option = 'high'
+        elif choice == 4:
+            quality_option = 'very_high'
+        elif choice == 5:
+            quality_option = 'ultra_high'
+        elif choice == 6:
+            quality_option = 'custom'
+            while True:
+                try:
+                    custom_bitrate = input("Enter custom bitrate (e.g., 6000k or 6000): ").strip()
+                    if custom_bitrate.endswith('k'):
+                        custom_bitrate = custom_bitrate
+                    else:
+                        custom_bitrate = custom_bitrate + 'k'
+                    break
+                except ValueError as e:
+                    print(f"Invalid input: {e}")
+        else:
+            raise ValueError("Invalid choice.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+    else:
+        images_to_video(delay_ms, False, False, delay_ms, delay_ms, quality_option, custom_bitrate)
