@@ -25,6 +25,9 @@ download the `make_frame_animation.py` to a directory of your choosings.
 ### Step 3: Run the Script
 open your terminal inside the directory you download the files to/moved them to.
 
+> shift-rightclick the folder "open powershell/terminal window here" (that should open the terminal at the right place)
+> or select the folder manually by `cd "your folder path"` e.g. `cd "C:\Frames2Vid"`
+
 now run the following command to start the script:
 ```bash
 python make_frame_animation.py
