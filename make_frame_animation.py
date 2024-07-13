@@ -2,16 +2,27 @@ import cv2
 import os
 import subprocess
 from PIL import Image
+import re
+
+def natural_sort_key(s):
+    """
+    Split the string `s` into list of strings and integers, and return it as a tuple.
+    This allows for natural sorting (i.e., "image2" before "image10").
+    """
+    return [int(text) if text.isdigit() else text.lower() for text in re.split('([0-9]+)', s)]
 
 def images_to_video(delay_ms, hold_first, hold_last, hold_first_ms, hold_last_ms, quality_option, custom_bitrate=None, sort_by='name'):
     # Get the current folder path
     folder_path = os.path.dirname(os.path.abspath(__file__))
 
     # Get list of all files in the folder
+    files = [f for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg'))]
+
     if sort_by == 'date':
-        files = sorted([f for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg'))], key=lambda x: os.path.getmtime(os.path.join(folder_path, x)))
+        files = sorted(files, key=lambda x: os.path.getmtime(os.path.join(folder_path, x)))
     else:
-        files = sorted([f for f in os.listdir(folder_path) if f.endswith(('png', 'jpg', 'jpeg'))])
+        # Use the custom natural_sort_key for natural sorting
+        files = sorted(files, key=natural_sort_key)
 
     if not files:
         print("No images found in the folder.")
